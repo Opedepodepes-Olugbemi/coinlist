@@ -3,20 +3,36 @@ import { useParams, Link } from "react-router-dom";
 import { getAsset, getAssetHistory } from "@/lib/api";
 import { PriceChart } from "@/components/PriceChart";
 import { ArrowLeft } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const AssetDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const { toast } = useToast();
 
   const { data: asset, isLoading: assetLoading } = useQuery({
     queryKey: ["asset", id],
     queryFn: () => getAsset(id!),
     enabled: !!id,
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to load asset details. Please try again later.",
+        variant: "destructive",
+      });
+    },
   });
 
   const { data: history, isLoading: historyLoading } = useQuery({
     queryKey: ["assetHistory", id],
     queryFn: () => getAssetHistory(id!),
     enabled: !!id,
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to load price history. Please try again later.",
+        variant: "destructive",
+      });
+    },
   });
 
   const isLoading = assetLoading || historyLoading;
@@ -24,8 +40,8 @@ const AssetDetail = () => {
   if (isLoading) {
     return (
       <div className="container py-8 animate-pulse">
-        <div className="h-8 w-64 bg-brutal-black/20 mb-8" />
-        <div className="brutal-border bg-brutal-white h-[400px]" />
+        <div className="h-8 w-64 bg-brutal-black/20 mb-8 rounded" />
+        <div className="brutal-border bg-brutal-white h-[400px] rounded" />
       </div>
     );
   }

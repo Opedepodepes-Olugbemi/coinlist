@@ -1,5 +1,12 @@
 import { Asset } from "@/types/crypto";
 import { Link } from "react-router-dom";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 
 export function AssetTable({ assets }: { assets: Asset[] }) {
   return (
@@ -9,9 +16,51 @@ export function AssetTable({ assets }: { assets: Asset[] }) {
           <tr className="text-left border-b-4 border-brutal-black">
             <th className="p-4">Rank</th>
             <th className="p-4">Name</th>
-            <th className="p-4">Price (USD)</th>
-            <th className="p-4">24h Change</th>
-            <th className="p-4">Market Cap</th>
+            <th className="p-4 whitespace-nowrap">
+              <div className="flex items-center gap-2">
+                Price (USD)
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Info size={16} />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Current price in US Dollars</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            </th>
+            <th className="p-4 whitespace-nowrap">
+              <div className="flex items-center gap-2">
+                24h Change
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Info size={16} />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Price change in the last 24 hours</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            </th>
+            <th className="p-4 whitespace-nowrap">
+              <div className="flex items-center gap-2">
+                Market Cap
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Info size={16} />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Total market value in US Dollars</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -24,7 +73,7 @@ export function AssetTable({ assets }: { assets: Asset[] }) {
               <td className="p-4">
                 <Link
                   to={`/asset/${asset.id}`}
-                  className="flex items-center gap-2 hover:text-brutal-orange"
+                  className="flex items-center gap-2 hover:text-brutal-orange brutal-hover"
                 >
                   <span className="font-bold">{asset.symbol}</span>
                   <span className="text-sm">{asset.name}</span>

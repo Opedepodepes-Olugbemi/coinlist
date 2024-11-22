@@ -1,21 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTopAssets } from "@/lib/api";
 import { AssetTable } from "@/components/AssetTable";
+import { useToast } from "@/components/ui/use-toast";
 
 const Index = () => {
+  const { toast } = useToast();
   const { data: assets, isLoading, error } = useQuery({
     queryKey: ["assets"],
     queryFn: getTopAssets,
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to load cryptocurrency data. Please try again later.",
+        variant: "destructive",
+      });
+    },
   });
 
   if (isLoading) {
     return (
       <div className="container py-8 animate-pulse">
-        <div className="h-8 w-64 bg-brutal-black/20 mb-8" />
+        <div className="h-8 w-64 bg-brutal-black/20 mb-8 rounded" />
         <div className="brutal-border bg-brutal-white p-4">
           <div className="space-y-4">
             {[...Array(10)].map((_, i) => (
-              <div key={i} className="h-12 bg-brutal-black/20" />
+              <div key={i} className="h-12 bg-brutal-black/20 rounded" />
             ))}
           </div>
         </div>
@@ -40,6 +49,6 @@ const Index = () => {
       <AssetTable assets={assets || []} />
     </div>
   );
-};
+}
 
 export default Index;
