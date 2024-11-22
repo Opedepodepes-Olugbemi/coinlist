@@ -13,12 +13,14 @@ const AssetDetail = () => {
     queryKey: ["asset", id],
     queryFn: () => getAsset(id!),
     enabled: !!id,
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to load asset details. Please try again later.",
-        variant: "destructive",
-      });
+    meta: {
+      onError: () => {
+        toast({
+          title: "Error",
+          description: "Failed to load asset details. Please try again later.",
+          variant: "destructive",
+        });
+      },
     },
   });
 
@@ -26,12 +28,14 @@ const AssetDetail = () => {
     queryKey: ["assetHistory", id],
     queryFn: () => getAssetHistory(id!),
     enabled: !!id,
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to load price history. Please try again later.",
-        variant: "destructive",
-      });
+    meta: {
+      onError: () => {
+        toast({
+          title: "Error",
+          description: "Failed to load price history. Please try again later.",
+          variant: "destructive",
+        });
+      },
     },
   });
 

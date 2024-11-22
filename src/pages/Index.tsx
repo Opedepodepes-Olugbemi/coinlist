@@ -8,12 +8,14 @@ const Index = () => {
   const { data: assets, isLoading, error } = useQuery({
     queryKey: ["assets"],
     queryFn: getTopAssets,
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to load cryptocurrency data. Please try again later.",
-        variant: "destructive",
-      });
+    meta: {
+      onError: () => {
+        toast({
+          title: "Error",
+          description: "Failed to load cryptocurrency data. Please try again later.",
+          variant: "destructive",
+        });
+      },
     },
   });
 
