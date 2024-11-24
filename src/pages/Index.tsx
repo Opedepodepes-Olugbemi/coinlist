@@ -2,9 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { getTopAssets } from "@/lib/api";
 import { AssetTable } from "@/components/AssetTable";
 import { useToast } from "@/components/ui/use-toast";
+import { SearchAndFilter } from "@/components/SearchAndFilter";
+import { useState, useMemo } from "react";
 
 const Index = () => {
   const { toast } = useToast();
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("rank");
+
   const { data: assets, isLoading, error } = useQuery({
     queryKey: ["assets"],
     queryFn: getTopAssets,
@@ -18,6 +23,35 @@ const Index = () => {
       },
     },
   });
+
+  const filteredAndSortedAssets = useMemo(() => {
+    if (!assets) return [];
+
+    let filtered = assets.filter(
+      (asset) =>
+        asset.name.toLowerCase().includes(search.toLowerCase()) ||
+        asset.symbol.toLowerCase().includes(search.toLowerCase())
+    );
+
+    return filtered.sort((a, b) => {
+      switch (sortBy) {
+        case "priceAsc":
+          return Number(a.priceUsd) - Number(b.priceUsd);
+        case "priceDesc":
+          return Number(b.priceUsd) - Number(a.priceUsd);
+        case "changeAsc":
+          return (
+            Number(a.changePercent24Hr) - Number(b.changePercent24Hr)
+          );
+        case "changeDesc":
+          return (
+            Number(b.changePercent24Hr) - Number(a.changePercent24Hr)
+          );
+        default:
+          return Number(a.rank) - Number(b.rank);
+      }
+    });
+  }, [assets, search, sortBy]);
 
   if (isLoading) {
     return (
@@ -48,9 +82,15 @@ const Index = () => {
   return (
     <div className="container py-8 animate-slide-up">
       <h1 className="text-4xl font-bold mb-8">Top 50 Cryptocurrencies</h1>
-      <AssetTable assets={assets || []} />
+      <SearchAndFilter
+        searchValue={search}
+        sortValue={sortBy}
+        onSearchChange={setSearch}
+        onSortChange={setSortBy}
+      />
+      <AssetTable assets={filteredAndSortedAssets} />
     </div>
   );
-}
+};
 
 export default Index;

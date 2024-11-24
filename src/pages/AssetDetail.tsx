@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
 import { getAsset, getAssetHistory } from "@/lib/api";
-import { PriceChart } from "@/components/PriceChart";
+import { TrendChart } from "@/components/TrendChart";
 import { ArrowLeft } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -87,7 +87,7 @@ const AssetDetail = () => {
           </div>
         </div>
 
-        {history && <PriceChart data={history} />}
+        {history && <TrendChart data={history} />}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="brutal-border bg-brutal-white p-4">
