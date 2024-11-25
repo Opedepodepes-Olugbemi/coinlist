@@ -4,6 +4,7 @@ import { AssetTable } from "@/components/AssetTable";
 import { useToast } from "@/components/ui/use-toast";
 import { SearchAndFilter } from "@/components/SearchAndFilter";
 import { useState, useMemo } from "react";
+import { PredictButton } from "@/components/PredictButton";
 
 const Index = () => {
   const { toast } = useToast();
@@ -89,6 +90,7 @@ const Index = () => {
         onSortChange={setSortBy}
       />
       <AssetTable assets={filteredAndSortedAssets} />
+      <PredictButton />
     </div>
   );
 };

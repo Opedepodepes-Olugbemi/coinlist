@@ -4,6 +4,7 @@ import { getAsset, getAssetHistory } from "@/lib/api";
 import { TrendChart } from "@/components/TrendChart";
 import { ArrowLeft } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { PredictButton } from "@/components/PredictButton";
 
 const AssetDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -118,6 +119,8 @@ const AssetDetail = () => {
           </div>
         </div>
       </div>
+      
+      <PredictButton asset={asset} />
     </div>
   );
 };
