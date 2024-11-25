@@ -34,20 +34,21 @@ export function PredictionChatbot({ asset, onClose }: PredictionChatbotProps) {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://api.xai.com/v1/chat", {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer xai-6lbwVHBo8BOanCYOvC7QcIyE9D8WbV56jikyvm268PwWKBWcLzw8vtlVbSu93jO5ReemzG397MTZOlCW",
         },
         body: JSON.stringify({
+          model: "gpt-3.5-turbo",
           messages: [
-            ...messages,
-            userMessage,
             {
               role: "system",
               content: `You are a crypto investment advisor. The user is asking about ${asset.name} (${asset.symbol}). Current price: $${asset.priceUsd}, 24h change: ${asset.changePercent24Hr}%. Provide concise, data-driven advice.`,
             },
+            ...messages,
+            userMessage,
           ],
         }),
       });
@@ -57,7 +58,7 @@ export function PredictionChatbot({ asset, onClose }: PredictionChatbotProps) {
       const data = await response.json();
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.message },
+        { role: "assistant", content: data.choices[0].message.content },
       ]);
     } catch (error) {
       toast({
