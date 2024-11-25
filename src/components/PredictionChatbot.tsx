@@ -19,6 +19,7 @@ interface PredictionChatbotProps {
 const openai = new OpenAI({
   apiKey: import.meta.env.VITE_XAI_API_KEY,
   baseURL: "https://api.x.ai/v1",
+  dangerouslyAllowBrowser: true
 });
 
 export function PredictionChatbot({ asset, onClose }: PredictionChatbotProps) {
