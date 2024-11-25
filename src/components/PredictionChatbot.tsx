@@ -4,6 +4,7 @@ import { Asset } from "@/types/crypto";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useToast } from "./ui/use-toast";
+import OpenAI from "openai";
 
 interface Message {
   role: "user" | "assistant";
@@ -14,6 +15,11 @@ interface PredictionChatbotProps {
   asset?: Asset;
   onClose: () => void;
 }
+
+const openai = new OpenAI({
+  apiKey: import.meta.env.VITE_XAI_API_KEY,
+  baseURL: "https://api.x.ai/v1",
+});
 
 export function PredictionChatbot({ asset, onClose }: PredictionChatbotProps) {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -34,31 +40,21 @@ export function PredictionChatbot({ asset, onClose }: PredictionChatbotProps) {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer xai-6lbwVHBo8BOanCYOvC7QcIyE9D8WbV56jikyvm268PwWKBWcLzw8vtlVbSu93jO5ReemzG397MTZOlCW",
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: `You are a crypto investment advisor. The user is asking about ${asset.name} (${asset.symbol}). Current price: $${asset.priceUsd}, 24h change: ${asset.changePercent24Hr}%. Provide concise, data-driven advice.`,
-            },
-            ...messages,
-            userMessage,
-          ],
-        }),
+      const completion = await openai.chat.completions.create({
+        model: "grok-beta",
+        messages: [
+          {
+            role: "system",
+            content: `You are a crypto investment advisor. The user is asking about ${asset.name} (${asset.symbol}). Current price: $${asset.priceUsd}, 24h change: ${asset.changePercent24Hr}%. Provide concise, data-driven advice.`,
+          },
+          ...messages,
+          userMessage,
+        ],
       });
 
-      if (!response.ok) throw new Error("Failed to get prediction");
-
-      const data = await response.json();
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.choices[0].message.content },
+        { role: "assistant", content: completion.choices[0].message.content },
       ]);
     } catch (error) {
       toast({
