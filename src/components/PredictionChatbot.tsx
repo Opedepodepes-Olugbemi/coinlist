@@ -4,7 +4,7 @@ import { Asset } from "@/types/crypto";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useToast } from "./ui/use-toast";
-import OpenAI from "openai";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
   role: "user" | "assistant";
@@ -15,12 +15,6 @@ interface PredictionChatbotProps {
   asset?: Asset;
   onClose: () => void;
 }
-
-const openai = new OpenAI({
-  apiKey: import.meta.env.VITE_XAI_API_KEY,
-  baseURL: "https://api.x.ai/v1",
-  dangerouslyAllowBrowser: true
-});
 
 export function PredictionChatbot({ asset, onClose }: PredictionChatbotProps) {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -41,21 +35,23 @@ export function PredictionChatbot({ asset, onClose }: PredictionChatbotProps) {
     setIsLoading(true);
 
     try {
-      const completion = await openai.chat.completions.create({
-        model: "grok-beta",
-        messages: [
-          {
-            role: "system",
-            content: `You are a crypto investment advisor. The user is asking about ${asset.name} (${asset.symbol}). Current price: $${asset.priceUsd}, 24h change: ${asset.changePercent24Hr}%. Provide concise, data-driven advice.`,
-          },
-          ...messages,
-          userMessage,
-        ],
+      const { data, error } = await supabase.functions.invoke('chat-completion', {
+        body: {
+          messages: [...messages, userMessage],
+          assetInfo: {
+            name: asset.name,
+            symbol: asset.symbol,
+            priceUsd: asset.priceUsd,
+            changePercent24Hr: asset.changePercent24Hr
+          }
+        }
       });
+
+      if (error) throw error;
 
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: completion.choices[0].message.content },
+        { role: "assistant", content: data.choices[0].message.content },
       ]);
     } catch (error) {
       toast({
@@ -63,6 +59,7 @@ export function PredictionChatbot({ asset, onClose }: PredictionChatbotProps) {
         description: "Failed to get prediction. Please try again.",
         variant: "destructive",
       });
+      console.error('Chat error:', error);
     } finally {
       setIsLoading(false);
     }
