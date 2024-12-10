@@ -1,29 +1,26 @@
 import { Asset, ApiResponse, AssetHistory } from "@/types/crypto";
-import { supabase } from "@/integrations/supabase/client";
+
+const BASE_URL = "https://api.coincap.io/v2";
 
 export async function getTopAssets(): Promise<Asset[]> {
-  const { data, error } = await supabase.functions.invoke('coincap', {
-    body: { endpoint: 'assets', params: 'limit=50' }
-  });
-  
-  if (error) throw new Error("Failed to fetch assets");
+  const response = await fetch(`${BASE_URL}/assets?limit=50`);
+  if (!response.ok) throw new Error("Failed to fetch assets");
+  const data: ApiResponse<Asset[]> = await response.json();
   return data.data;
 }
 
 export async function getAsset(id: string): Promise<Asset> {
-  const { data, error } = await supabase.functions.invoke('coincap', {
-    body: { endpoint: `assets/${id}` }
-  });
-  
-  if (error) throw new Error("Failed to fetch asset");
+  const response = await fetch(`${BASE_URL}/assets/${id}`);
+  if (!response.ok) throw new Error("Failed to fetch asset");
+  const data: ApiResponse<Asset> = await response.json();
   return data.data;
 }
 
 export async function getAssetHistory(id: string): Promise<AssetHistory[]> {
-  const { data, error } = await supabase.functions.invoke('coincap', {
-    body: { endpoint: `assets/${id}/history`, params: 'interval=h1' }
-  });
-  
-  if (error) throw new Error("Failed to fetch asset history");
+  const response = await fetch(
+    `${BASE_URL}/assets/${id}/history?interval=h1`
+  );
+  if (!response.ok) throw new Error("Failed to fetch asset history");
+  const data: ApiResponse<AssetHistory[]> = await response.json();
   return data.data;
 }
