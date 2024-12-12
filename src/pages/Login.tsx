@@ -23,6 +23,7 @@ const Login = () => {
         <h1 className="text-3xl font-bold mb-8">Welcome to Crypto Tracker</h1>
         <Auth
           supabaseClient={supabase}
+          providers={[]}
           appearance={{
             theme: ThemeSupa,
             style: {
@@ -41,6 +42,7 @@ const Login = () => {
               },
             },
           }}
+          view="sign_in"
         />
       </div>
     </div>
