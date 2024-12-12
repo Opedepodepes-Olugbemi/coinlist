@@ -34,16 +34,25 @@ export function PredictButton({ asset }: PredictButtonProps) {
 
   return (
     <>
-      <Button
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-4 right-4 brutal-border bg-brutal-orange hover:bg-brutal-orange/80 text-white gap-2 ${
-          asset ? 'animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]' : ''
-        }`}
+      <div 
+        className="fixed bottom-4 right-4 z-50"
         style={{ opacity }}
       >
-        <Bot className="h-4 w-4" />
-        Predict
-      </Button>
+        {asset && (
+          <div className="absolute -top-2 -right-2 bg-brutal-yellow brutal-border px-2 py-1 text-xs font-bold z-10">
+            {asset.symbol}
+          </div>
+        )}
+        <Button
+          onClick={() => setIsOpen(true)}
+          className={`brutal-border bg-brutal-orange hover:bg-brutal-orange/80 text-white gap-2 relative ${
+            asset ? 'animate-pulse-aura' : ''
+          }`}
+        >
+          <Bot className="h-4 w-4" />
+          Predict
+        </Button>
+      </div>
 
       {isOpen && <PredictionChatbot asset={asset} onClose={() => setIsOpen(false)} />}
     </>
