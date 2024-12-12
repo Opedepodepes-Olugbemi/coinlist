@@ -1,11 +1,12 @@
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     const checkUser = async () => {
@@ -17,33 +18,45 @@ const Login = () => {
     checkUser();
   }, [navigate]);
 
+  const handleAnonymousSignIn = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithSSO({
+        provider: 'anonymous'
+      });
+      
+      if (error) {
+        toast({
+          title: "Error signing in",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      toast({
+        title: "Error signing in",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="container max-w-md mx-auto py-8">
       <div className="brutal-border bg-brutal-white p-8">
         <h1 className="text-3xl font-bold mb-8">Welcome to Crypto Tracker</h1>
-        <Auth
-          supabaseClient={supabase}
-          providers={[]}
-          appearance={{
-            theme: ThemeSupa,
-            style: {
-              button: {
-                background: "#000",
-                color: "#fff",
-                border: "4px solid #000",
-                borderRadius: "0",
-                textTransform: "uppercase",
-                fontWeight: "bold",
-              },
-              input: {
-                background: "#fff",
-                border: "4px solid #000",
-                borderRadius: "0",
-              },
-            },
-          }}
-          view="sign_in"
-        />
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-center mb-4">
+            Click below to start tracking your crypto assets anonymously
+          </p>
+          <Button 
+            onClick={handleAnonymousSignIn}
+            className="w-full"
+          >
+            Continue Anonymously
+          </Button>
+        </div>
       </div>
     </div>
   );
