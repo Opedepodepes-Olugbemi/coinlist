@@ -44,6 +44,9 @@ export function PredictionChatbot({ asset, onClose }: PredictionChatbotProps) {
             priceUsd: asset.priceUsd,
             changePercent24Hr: asset.changePercent24Hr
           }
+        },
+        headers: {
+          Authorization: `Bearer ${process.env.VITE_XAI_API_KEY}`
         }
       });
 
