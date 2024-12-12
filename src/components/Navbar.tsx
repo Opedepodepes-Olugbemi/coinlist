@@ -6,7 +6,7 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="w-full bg-brutal-white brutal-border mb-8">
+    <nav className="sticky top-0 z-50 w-full bg-brutal-white brutal-border mb-8">
       <div className="container mx-auto px-4 py-4">
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center justify-between">
