@@ -41,13 +41,9 @@ const Index = () => {
         case "priceDesc":
           return Number(b.priceUsd) - Number(a.priceUsd);
         case "changeAsc":
-          return (
-            Number(a.changePercent24Hr) - Number(b.changePercent24Hr)
-          );
+          return Number(a.changePercent24Hr) - Number(b.changePercent24Hr);
         case "changeDesc":
-          return (
-            Number(b.changePercent24Hr) - Number(a.changePercent24Hr)
-          );
+          return Number(b.changePercent24Hr) - Number(a.changePercent24Hr);
         default:
           return Number(a.rank) - Number(b.rank);
       }
@@ -82,7 +78,7 @@ const Index = () => {
 
   return (
     <div className="container py-8 animate-slide-up">
-      <h1 className="text-4xl font-bold mb-8">Top 50 Cryptocurrencies</h1>
+      <h1 className="text-3xl md:text-4xl font-bold mb-8">Top 50 Cryptocurrencies</h1>
       <SearchAndFilter
         searchValue={search}
         sortValue={sortBy}

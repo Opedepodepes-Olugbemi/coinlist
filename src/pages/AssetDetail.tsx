@@ -65,12 +65,12 @@ const AssetDetail = () => {
 
       <div className="grid gap-8">
         <div className="brutal-border bg-brutal-white p-8">
-          <div className="flex items-baseline gap-4 mb-4">
+          <div className="flex flex-col md:flex-row md:items-baseline gap-4 mb-4">
             <h1 className="text-4xl font-bold">{asset.name}</h1>
             <span className="text-2xl text-brutal-orange">{asset.symbol}</span>
           </div>
 
-          <div className="text-6xl font-bold mb-4">
+          <div className="text-4xl md:text-6xl font-bold mb-4">
             ${Number(asset.priceUsd).toLocaleString(undefined, {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
@@ -93,7 +93,7 @@ const AssetDetail = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="brutal-border bg-brutal-white p-4">
             <h3 className="font-bold mb-2">Market Cap</h3>
-            <p className="text-2xl">
+            <p className="text-xl md:text-2xl">
               ${Number(asset.marketCapUsd).toLocaleString(undefined, {
                 maximumFractionDigits: 0,
               })}
@@ -102,7 +102,7 @@ const AssetDetail = () => {
 
           <div className="brutal-border bg-brutal-white p-4">
             <h3 className="font-bold mb-2">24h Volume</h3>
-            <p className="text-2xl">
+            <p className="text-xl md:text-2xl">
               ${Number(asset.volumeUsd24Hr).toLocaleString(undefined, {
                 maximumFractionDigits: 0,
               })}
@@ -111,7 +111,7 @@ const AssetDetail = () => {
 
           <div className="brutal-border bg-brutal-white p-4">
             <h3 className="font-bold mb-2">Supply</h3>
-            <p className="text-2xl">
+            <p className="text-xl md:text-2xl">
               {Number(asset.supply).toLocaleString(undefined, {
                 maximumFractionDigits: 0,
               })}
