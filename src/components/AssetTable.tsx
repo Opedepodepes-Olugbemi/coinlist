@@ -10,10 +10,10 @@ import { Info } from "lucide-react";
 
 export function AssetTable({ assets }: { assets: Asset[] }) {
   return (
-    <div className="w-full overflow-x-auto brutal-border bg-brutal-white dark:bg-brutal-black p-4">
+    <div className="w-full overflow-x-auto brutal-border bg-brutal-white p-4">
       <table className="w-full">
         <thead>
-          <tr className="text-left border-b-4 border-brutal-black dark:border-brutal-white">
+          <tr className="text-left border-b-4 border-brutal-black">
             <th className="p-4">Rank</th>
             <th className="p-4">Name</th>
             <th className="p-4 whitespace-nowrap">
@@ -67,7 +67,7 @@ export function AssetTable({ assets }: { assets: Asset[] }) {
           {assets.map((asset) => (
             <tr
               key={asset.id}
-              className="border-b-2 border-brutal-black dark:border-brutal-white hover:bg-brutal-yellow/20 transition-colors"
+              className="border-b-2 border-brutal-black hover:bg-brutal-yellow/20 transition-colors"
             >
               <td className="p-4">{asset.rank}</td>
               <td className="p-4">
