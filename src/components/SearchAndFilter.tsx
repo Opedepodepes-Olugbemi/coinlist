@@ -35,7 +35,7 @@ export function SearchAndFilter({
           <SelectTrigger className="border-2 border-brutal-black">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
-          <SelectContent className="brutal-border bg-brutal-white">
+          <SelectContent>
             <SelectItem value="rank">Rank</SelectItem>
             <SelectItem value="priceAsc">Price (Low to High)</SelectItem>
             <SelectItem value="priceDesc">Price (High to Low)</SelectItem>
