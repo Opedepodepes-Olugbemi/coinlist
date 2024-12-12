@@ -36,36 +36,6 @@
 
     --radius: 0px;
   }
-
-  .dark {
-    --background: 221 39% 11%;
-    --foreground: 210 40% 98%;
-
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222 47% 11%;
-
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 217 32% 17%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 210 40% 98%;
-    --input: 210 40% 98%;
-    --ring: 210 40% 98%;
-  }
 }
 
 @layer base {
@@ -78,9 +48,9 @@
 }
 
 .brutal-border {
-  @apply border-4 border-brutal-black dark:border-brutal-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)];
+  @apply border-4 border-brutal-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
 }
 
 .brutal-hover {
-  @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)];
+  @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)];
 }
