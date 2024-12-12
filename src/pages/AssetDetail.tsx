@@ -5,10 +5,13 @@ import { TrendChart } from "@/components/TrendChart";
 import { ArrowLeft } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { PredictButton } from "@/components/PredictButton";
+import { FavoriteButton } from "@/components/FavoriteButton";
+import { useAuth } from "@/components/AuthProvider";
 
 const AssetDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { toast } = useToast();
+  const { session } = useAuth();
 
   const { data: asset, isLoading: assetLoading } = useQuery({
     queryKey: ["asset", id],
@@ -86,6 +89,8 @@ const AssetDetail = () => {
           >
             {Number(asset.changePercent24Hr).toFixed(2)}% (24h)
           </div>
+
+          {session && <FavoriteButton assetId={asset.id} />}
         </div>
 
         {history && <TrendChart data={history} />}
