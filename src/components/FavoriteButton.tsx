@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 
 export function FavoriteButton({ assetId }: { assetId: string }) {
@@ -13,12 +13,18 @@ export function FavoriteButton({ assetId }: { assetId: string }) {
   const { data: isFavorite, isLoading } = useQuery({
     queryKey: ["favorite", assetId],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("favorites")
         .select()
         .eq("asset_id", assetId)
         .eq("user_id", session?.user?.id)
-        .single();
+        .maybeSingle(); // Changed from .single() to .maybeSingle()
+
+      if (error) {
+        console.error("Error fetching favorite:", error);
+        return false;
+      }
+      
       return !!data;
     },
     enabled: !!session?.user?.id,
