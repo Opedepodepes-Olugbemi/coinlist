@@ -17,7 +17,7 @@ export const Navbar = () => {
             className="flex items-center gap-2 text-xl font-bold brutal-hover"
           >
             <Coins className="h-8 w-8 text-brutal-orange" />
-            <span>CryptoTracker</span>
+            <span>Coinlist</span>
           </Link>
           <div className="flex items-center gap-4">
             {session && (
@@ -44,7 +44,7 @@ export const Navbar = () => {
               className="flex items-center gap-2 text-lg font-bold brutal-hover"
             >
               <Coins className="h-6 w-6 text-brutal-orange" />
-              <span>CryptoTracker</span>
+              <span>Coinlist</span>
             </Link>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
