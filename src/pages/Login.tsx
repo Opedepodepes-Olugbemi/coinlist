@@ -29,6 +29,12 @@ const Login = () => {
             description: "Anonymous sign-in is currently disabled. Please contact the administrator to enable this feature.",
             variant: "destructive",
           });
+        } else if (error.message.includes("captcha verification")) {
+          toast({
+            title: "Authentication Error",
+            description: "CAPTCHA verification is required. Please try again in a few moments.",
+            variant: "destructive",
+          });
         } else {
           toast({
             title: "Error signing in",
