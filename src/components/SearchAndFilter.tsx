@@ -31,11 +31,11 @@ export function SearchAndFilter({
         />
       </div>
       <div className="brutal-border bg-brutal-white p-4">
-        <Select defaultValue={sortValue} onValueChange={onSortChange}>
+        <Select value={sortValue} onValueChange={onSortChange}>
           <SelectTrigger className="border-2 border-brutal-black">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="brutal-border bg-brutal-white">
             <SelectItem value="rank">Rank</SelectItem>
             <SelectItem value="priceAsc">Price (Low to High)</SelectItem>
             <SelectItem value="priceDesc">Price (High to Low)</SelectItem>
