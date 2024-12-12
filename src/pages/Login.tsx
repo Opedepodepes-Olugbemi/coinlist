@@ -23,11 +23,19 @@ const Login = () => {
       const { error } = await supabase.auth.signInAnonymously();
       
       if (error) {
-        toast({
-          title: "Error signing in",
-          description: error.message,
-          variant: "destructive",
-        });
+        if (error.message.includes("anonymous_provider_disabled")) {
+          toast({
+            title: "Authentication Error",
+            description: "Anonymous sign-in is currently disabled. Please contact the administrator to enable this feature.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error signing in",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
       } else {
         navigate("/");
       }
