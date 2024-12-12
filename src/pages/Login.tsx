@@ -20,9 +20,7 @@ const Login = () => {
 
   const handleAnonymousSignIn = async () => {
     try {
-      const { error } = await supabase.auth.signInWithSSO({
-        provider: 'anonymous'
-      });
+      const { error } = await supabase.auth.signInAnonymously();
       
       if (error) {
         toast({
