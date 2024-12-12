@@ -31,7 +31,7 @@ export function SearchAndFilter({
         />
       </div>
       <div className="brutal-border bg-brutal-white p-4">
-        <Select value={sortValue} onValueChange={onSortChange}>
+        <Select defaultValue={sortValue} onValueChange={onSortChange}>
           <SelectTrigger className="border-2 border-brutal-black">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
