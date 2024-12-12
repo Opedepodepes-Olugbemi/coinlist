@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import AssetDetail from "./pages/AssetDetail";
 import Login from "./pages/Login";
+import Favorites from "./pages/Favorites";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { AuthProvider } from "./components/AuthProvider";
@@ -26,6 +27,7 @@ const App = () => (
                 <Route path="/login" element={<Login />} />
                 <Route path="/" element={<Index />} />
                 <Route path="/asset/:id" element={<AssetDetail />} />
+                <Route path="/favorites" element={<Favorites />} />
               </Routes>
             </main>
             <Footer />

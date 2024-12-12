@@ -1,9 +1,11 @@
-import { Coins, Menu, X } from "lucide-react";
+import { Coins, Menu, Star, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "./AuthProvider";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { session } = useAuth();
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-brutal-white brutal-border mb-8">
@@ -18,6 +20,15 @@ export const Navbar = () => {
             <span>CryptoTracker</span>
           </Link>
           <div className="flex items-center gap-4">
+            {session && (
+              <Link
+                to="/favorites"
+                className="flex items-center gap-2 brutal-hover px-3 py-2"
+              >
+                <Star className="h-4 w-4" />
+                <span>Favorites</span>
+              </Link>
+            )}
             <div className="text-sm flex items-center gap-2">
               <Coins className="h-4 w-4 text-brutal-orange" />
               made for coin enthusiasts by coderhema
@@ -50,7 +61,16 @@ export const Navbar = () => {
           {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="mt-4 py-4 border-t-4 border-brutal-black animate-slide-up">
-              <div className="flex items-center gap-2 text-sm justify-center">
+              {session && (
+                <Link
+                  to="/favorites"
+                  className="flex items-center gap-2 justify-center brutal-hover px-3 py-2"
+                >
+                  <Star className="h-4 w-4" />
+                  <span>Favorites</span>
+                </Link>
+              )}
+              <div className="flex items-center gap-2 text-sm justify-center mt-2">
                 <Coins className="h-4 w-4 text-brutal-orange" />
                 made for coin enthusiasts by coderhema
               </div>
